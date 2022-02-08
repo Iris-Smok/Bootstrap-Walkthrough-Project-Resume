@@ -43,6 +43,9 @@ function repoInformationHTML(repos) {
 }
 
 function fetchGitHubInformation(event) {
+  $("#gh-user-data").html(""); // to clear the repo-div when tex box is empty
+  $("#gh-repo-data").html("");
+
   var username = $("#gh-username").val(); // create a variable to hold the username that we typed, used jQuery to select the gh-username ID and the value in the text field
 
   if (!username) {
@@ -86,3 +89,5 @@ function fetchGitHubInformation(event) {
     }
   );
 }
+
+$(document).ready(fetchGitHubInformation);
