@@ -18,6 +18,30 @@ function userInformationHTML(user) {
         </div>`;
 }
 
+function repoInformationHTML(repos) {
+  // takes one argument, repos the object returned from our GitHub API
+  if (repos.length == 0) {
+    // Github returns this object as an array so we will use standart length to see if it's equal to 0. If our array is empty and there are no repo for that user
+    return `<div class ="clearfix repo-list">No repos!</div>`;
+  }
+  var listItemHTML = repos.map(function (repo) {
+    // if data has been returned, then since it's an array, we want to iterate throught it and get that info out. So we are going to create a variable and that's going to take the results of the map() method
+    // map method works like a forEach but it returns an array with the results of its function
+    return `<li> 
+                <a href ="${repo.html_url}" target="_blank">${repo.name}</a>
+
+                </li>`; // this is the content of the array that we want to return
+  });
+  return `<div class="clearfix repo-list">
+            <p>
+                <strong>Repo List: </strong>
+            </p>
+            <ul>
+                ${listItemHTML.join("\n")}
+            </ul>
+            </div>`;
+}
+
 function fetchGitHubInformation(event) {
   var username = $("#gh-username").val(); // create a variable to hold the username that we typed, used jQuery to select the gh-username ID and the value in the text field
 
