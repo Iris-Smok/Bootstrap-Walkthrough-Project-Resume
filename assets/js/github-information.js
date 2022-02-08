@@ -35,15 +35,19 @@ function fetchGitHubInformation(event) {
     .css("text-align", "center");
 
   $.when(
-    $.getJSON(`https://api.github.com/users/${username}`)
+    $.getJSON(`https://api.github.com/users/${username}`),
     // to issue the promise we use $.when method. When takes a function as its first argument.
     //We are going to pass int the funtion getJSON(). In here we can pass in the address of our GitHUb API and then the value of username that we've obtained from our input box
+    $.getJSON(`https://api.github.com/users/${username}/repos`) // this will list the repo from that individual user
   ).then(
     // when that is done we want to do is to display it somehow in pur gh-user-data div
-    function (response) {
+    function (firstResponse, secondResponse) {
+      // we are doing two JSON call, we actually need to have two responses come back in our function
       // for that we have another function, which the first argument is response that came back from our getJSON() method
-      var userData = response; // we stored response in userData variable
+      var userData = firstResponse[0]; // we stored response in userData variable
+      var repoData = secondResponse[0]; // when we do two calls the when() method packs a  response up into arrays, and each one is the first element of the array. So we need to put indexes on there for these responses
       $("#gh-user-data").html(userInformationHTML(userData)); // we selected the gh-user-data div and set the HTML to the results of another function userInformationHTML(userData) argument.
+      $("#gh-repo-data").html(repoInformationHTML(repoData));
     },
     function (errorResponse) {
       //if the promose don't work put we add an error() function that takes  an errorResponse
