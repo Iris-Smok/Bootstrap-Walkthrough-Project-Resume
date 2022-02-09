@@ -13,10 +13,14 @@ function sendMail(contactForm) {
     .then(
       function (response) {
         console.log("SUCCESS", response);
+        alert("Your email was send successfully");
       },
       function (error) {
         console.log("FAILED", error);
       }
     );
-  return false; // To block from loading a new page
+  contactForm.name.value = "";
+  contactForm.emailaddress.value = "";
+  contactForm.projectsummary.value = "";
+  return false;
 }
